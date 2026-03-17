@@ -17,7 +17,7 @@ function Navigation({ onLogout }: { onLogout: () => void }) {
   ];
 
   return (
-    <nav className="w-64 bg-gray-900 text-white h-screen sticky top-0 p-4 flex flex-col gap-2">
+    <nav className="w-64 bg-white text-gray-800 h-screen sticky top-0 p-4 flex flex-col gap-2 border-r border-gray-200">
       <div className="text-xl font-bold mb-8 px-2">Admin Urna</div>
       {navItems.map((item) => {
         const Icon = item.icon;
@@ -35,7 +35,7 @@ function Navigation({ onLogout }: { onLogout: () => void }) {
           </Link>
         );
       })}
-      <div className="mt-auto pt-4 border-t border-gray-800">
+      <div className="mt-auto pt-4 border-t border-gray-100">
         <button
           onClick={onLogout}
           className="flex items-center gap-3 px-4 py-3 rounded-lg w-full text-left text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"

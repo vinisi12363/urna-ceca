@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
+import OrientationPrompt from './OrientationPrompt';
 
 interface UrnaProps {
   classId: string;
@@ -137,40 +138,42 @@ export default function Urna({ classId, onReset }: UrnaProps) {
   if (isFinished) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-8 landscape:flex-row flex-col">
-        <div className="w-[800px] h-[500px] bg-white border-2 border-gray-300 shadow-2xl flex items-center justify-center">
-            <h1 className="text-7xl font-black text-gray-800 tracking-widest uppercase">FIM</h1>
+        <OrientationPrompt />
+        <div className="w-full max-w-[800px] h-auto aspect-video bg-white border-2 border-gray-300 shadow-2xl flex items-center justify-center">
+            <h1 className="text-4xl md:text-7xl font-black text-gray-800 tracking-widest uppercase">FIM</h1>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-0 md:p-4">
+      <OrientationPrompt />
       {/* Container Urna, flex row layout mimicking real UI */}
-      <div className="w-full max-w-[1000px] aspect-[16/9] md:h-[600px] bg-white border-4 border-gray-300 shadow-2xl flex flex-row overflow-hidden rounded-xl">
+      <div className="w-full max-w-[1000px] md:aspect-[16/9] h-screen md:h-[600px] bg-white md:border-4 border-gray-300 shadow-2xl flex flex-col md:flex-row overflow-hidden md:rounded-xl">
         
         {/* Left Screen */}
-        <div className="flex-1 bg-white p-8 border-r-4 border-gray-800 relative flex flex-col justify-between overflow-hidden">
+        <div className="flex-1 bg-white p-4 md:p-8 border-b-4 md:border-b-0 md:border-r-4 border-gray-800 relative flex flex-col justify-between overflow-hidden">
             {/* Top Info */}
             <div>
-              <div className="text-xl font-bold uppercase tracking-wide mb-6">Seu voto para</div>
-              <div className="text-center font-bold text-5xl mb-12 capitalize">{currentRole.title}</div>
+              <div className="text-lg md:text-xl font-bold uppercase tracking-wide mb-2 md:mb-6">Seu voto para</div>
+              <div className="text-center font-bold text-3xl md:text-5xl mb-4 md:mb-12 capitalize">{currentRole.title}</div>
             </div>
 
             {/* Middle Input / Candidate Info */}
             <div className="flex-1">
               {voteType === 'BLANK' ? (
                  <div className="h-full flex items-center justify-center pb-20">
-                     <div className="text-6xl font-bold uppercase animate-pulse text-gray-800">Voto em Branco</div>
+                     <div className="text-4xl md:text-6xl font-bold uppercase animate-pulse text-gray-800">Voto em Branco</div>
                  </div>
               ) : (
-                <div className="flex flex-row justify-between h-full">
-                  <div className="flex flex-col gap-6">
+                <div className="flex flex-col md:flex-row justify-between h-full gap-4">
+                  <div className="flex flex-col gap-4 md:gap-6">
                       <div className="flex items-center gap-4">
-                        <span className="text-2xl font-bold w-24">Número:</span>
+                        <span className="text-xl md:text-2xl font-bold w-20 md:w-24">Número:</span>
                         <div className="flex gap-2">
                             {Array.from({ length: currentRole.digits }).map((_, i) => (
-                              <div key={i} className={`w-12 h-16 border-2 flex items-center justify-center text-4xl font-bold ${inputNumber[i] ? 'border-gray-800' : 'border-gray-300'} bg-white shadow-inner`}>
+                              <div key={i} className={`w-10 h-14 md:w-12 md:h-16 border-2 flex items-center justify-center text-3xl md:text-4xl font-bold ${inputNumber[i] ? 'border-gray-800' : 'border-gray-300'} bg-white shadow-inner`}>
                                 {inputNumber[i] || ''}
                               </div>
                             ))}
@@ -179,22 +182,22 @@ export default function Urna({ classId, onReset }: UrnaProps) {
 
                       {candidate && (
                         <>
-                          <div className="flex items-center gap-4 text-2xl font-bold">
-                            <span className="w-24">Nome:</span>
-                            <span className="text-3xl uppercase">{candidate.name}</span>
+                          <div className="flex items-center gap-4 text-xl md:text-2xl font-bold">
+                            <span className="w-20 md:w-24">Nome:</span>
+                            <span className="text-2xl md:text-3xl uppercase">{candidate.name}</span>
                           </div>
                         </>
                       )}
 
                       {voteType === 'NULL' && inputNumber.length === currentRole.digits && (
-                        <div className="mt-8 text-4xl font-bold uppercase animate-pulse">Voto Nulo</div>
+                        <div className="mt-4 md:mt-8 text-2xl md:text-4xl font-bold uppercase animate-pulse">Voto Nulo</div>
                       )}
                   </div>
                   
                   {candidate?.photo_url && (
-                    <div className="flex flex-col items-center">
-                       <img src={candidate.photo_url} alt="Candidato" className="w-40 h-56 object-cover border-4 border-white shadow-lg mb-2" />
-                       <span className="text-sm font-bold uppercase border-t border-b border-black w-full text-center py-1">{currentRole.title}</span>
+                    <div className="flex flex-row md:flex-col items-center gap-4 md:gap-0 self-start md:self-auto">
+                       <img src={candidate.photo_url} alt="Candidato" className="w-24 h-32 md:w-40 md:h-56 object-cover border-4 border-white shadow-lg mb-2" />
+                       <span className="text-xs md:text-sm font-bold uppercase border-t border-b border-black w-full text-center py-1">{currentRole.title}</span>
                     </div>
                   )}
                 </div>
@@ -213,14 +216,14 @@ export default function Urna({ classId, onReset }: UrnaProps) {
         </div>
 
         {/* Right Keypad */}
-        <div className="w-[350px] bg-[#222] p-8 flex flex-col gap-4 shadow-inner">
+        <div className="w-full md:w-[350px] bg-[#222] p-4 md:p-8 flex flex-col gap-4 shadow-inner">
            {/* Numpad Grid */}
-           <div className="grid grid-cols-3 gap-4 flex-1">
+           <div className="grid grid-cols-3 gap-2 md:gap-4 flex-1 md:flex-none">
              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                 <button 
                   key={num} 
                   onClick={() => handleKeyPress(num.toString())}
-                  className="bg-[#1a1a1a] hover:bg-[#333] text-white text-3xl font-bold rounded-lg shadow-[inset_0_-4px_0_rgba(0,0,0,0.6)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:translate-y-1 transition-all h-20 flex items-center justify-center font-mono border border-[#333]"
+                  className="bg-[#1a1a1a] hover:bg-[#333] text-white text-2xl md:text-3xl font-bold rounded-lg shadow-[inset_0_-4px_0_rgba(0,0,0,0.6)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:translate-y-1 transition-all h-14 md:h-20 flex items-center justify-center font-mono border border-[#333]"
                 >
                   {num}
                 </button>
@@ -228,7 +231,7 @@ export default function Urna({ classId, onReset }: UrnaProps) {
              <div className="col-start-2">
                 <button 
                   onClick={() => handleKeyPress('0')}
-                  className="w-full bg-[#1a1a1a] hover:bg-[#333] text-white text-3xl font-bold rounded-lg shadow-[inset_0_-4px_0_rgba(0,0,0,0.6)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:translate-y-1 transition-all h-20 flex items-center justify-center font-mono border border-[#333]"
+                  className="w-full bg-[#1a1a1a] hover:bg-[#333] text-white text-2xl md:text-3xl font-bold rounded-lg shadow-[inset_0_-4px_0_rgba(0,0,0,0.6)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:translate-y-1 transition-all h-14 md:h-20 flex items-center justify-center font-mono border border-[#333]"
                 >
                   0
                 </button>
@@ -236,23 +239,23 @@ export default function Urna({ classId, onReset }: UrnaProps) {
            </div>
 
            {/* Action Buttons */}
-           <div className="grid grid-cols-3 gap-3 h-20 mt-4">
+           <div className="grid grid-cols-3 gap-2 md:gap-3 h-16 md:h-20 mt-2 md:mt-4">
              <button 
                onClick={handleBranco}
-                className="bg-white hover:bg-gray-200 text-black font-bold uppercase text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.2)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] active:translate-y-1 transition-all"
+                className="bg-white hover:bg-gray-200 text-black font-bold uppercase text-xs md:text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.2)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] active:translate-y-1 transition-all"
              >
                Branco
              </button>
              <button 
                onClick={handleCorrige}
-                className="bg-[#cd3333] hover:bg-[#b02a2a] text-white font-bold uppercase text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all"
+                className="bg-[#cd3333] hover:bg-[#b02a2a] text-white font-bold uppercase text-xs md:text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all"
              >
                Corrige
              </button>
              <button 
                 onClick={handleConfirma}
                 disabled={isVoting || (voteType === null && inputNumber.length < currentRole.digits)}
-                className="bg-[#32a852] hover:bg-[#288a42] text-white font-bold uppercase text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all disabled:opacity-50"
+                className="bg-[#32a852] hover:bg-[#288a42] text-white font-bold uppercase text-xs md:text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all disabled:opacity-50"
              >
                Confirma
              </button>
