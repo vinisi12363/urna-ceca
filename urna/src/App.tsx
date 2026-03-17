@@ -1,30 +1,70 @@
 import { useState, useEffect } from 'react';
+import { LogOut } from 'lucide-react';
 import { supabase } from './lib/supabase';
 import Urna from './components/Urna';
+import Login from './pages/Login';
 
 function App() {
+  const [session, setSession] = useState<any>(null);
   const [classes, setClasses] = useState<{ id: string; name: string }[]>([]);
   const [selectedClass, setSelectedClass] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadClasses() {
-      const { data, error } = await supabase.from('classes').select('id, name').order('name');
-      if (!error && data) {
-        setClasses(data);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (session) {
+        loadClasses();
+      } else {
+        setLoading(false);
       }
-      setLoading(false);
-    }
-    loadClasses();
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (session) {
+        loadClasses();
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
+
+  async function loadClasses() {
+    setLoading(true);
+    const { data, error } = await supabase.from('classes').select('id, name').order('name');
+    if (!error && data) {
+      setClasses(data);
+    }
+    setLoading(false);
+  }
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    setSelectedClass('');
+  }
 
   if (loading) {
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center">Carregando...</div>;
   }
 
+  if (!session) {
+    return <Login />;
+  }
+
   if (!selectedClass) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 relative">
+        <button
+          onClick={handleLogout}
+          className="absolute top-4 right-4 flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors bg-white px-4 py-2 rounded-lg shadow-sm font-medium"
+        >
+          <LogOut size={18} />
+          Sair
+        </button>
+        
         <div className="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
           <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Inicializar Urna</h1>
           <p className="text-gray-600 mb-4 text-center">Selecione a turma desta Urna para começar a votação.</p>
