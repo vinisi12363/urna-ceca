@@ -107,8 +107,6 @@ export default function Urna({ classId, onReset }: UrnaProps) {
         role: currentRole.id,
         vote_type: actualVoteType,
       }]);
-      
-      playConfirmaSound();
 
       // Proceed to next or finish
       if (currentRoleIndex < ROLES.length - 1) {
@@ -117,8 +115,10 @@ export default function Urna({ classId, onReset }: UrnaProps) {
           setInputNumber('');
           setCandidate(null);
           setVoteType(null);
-        }, 1500); // Small delay to let sound play
+        }, 500);
       } else {
+        // Play sound only on the final vote
+        playConfirmaSound();
         setIsFinished(true);
         setTimeout(() => {
            // Reset the entire urna for the next voter after 5 seconds
