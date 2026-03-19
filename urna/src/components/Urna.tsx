@@ -147,13 +147,13 @@ export default function Urna({ classId, onReset }: UrnaProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-0 md:p-4">
+    <div className="min-h-screen bg-gray-200 flex items-center justify-center p-0 md:p-4">
       <OrientationPrompt />
       {/* Container Urna, flex row layout mimicking real UI */}
-      <div className="w-full max-w-[1000px] md:aspect-[16/9] h-screen md:h-[600px] bg-white md:border-4 border-gray-300 shadow-2xl flex flex-col md:flex-row overflow-hidden md:rounded-xl">
+      <div className="w-full max-w-[1000px] md:aspect-[16/9] h-screen md:h-[600px] bg-neutral-100 p-10 md:border-4 border-gray-300 shadow-2xl flex flex-col gap-4 md:flex-row overflow-hidden md:rounded-xl">
         
         {/* Left Screen */}
-        <div className="flex-1 bg-white p-4 md:p-8 border-b-4 md:border-b-0 md:border-r-4 border-gray-800 relative flex flex-col justify-between overflow-hidden">
+        <div className="flex-1 bg-white p-4 md:p-8 border-b-4 md:border-b-0 rounded-sm border-gray-800 relative flex flex-col justify-between overflow-hidden">
             {/* Top Info */}
             <div>
               <div className="text-lg md:text-xl font-bold uppercase tracking-wide mb-2 md:mb-6">Seu voto para</div>
@@ -196,7 +196,7 @@ export default function Urna({ classId, onReset }: UrnaProps) {
                   
                   {candidate?.photo_url && (
                     <div className="flex flex-row md:flex-col items-center gap-4 md:gap-0 self-start md:self-auto">
-                       <img src={candidate.photo_url} alt="Candidato" className="w-24 h-32 md:w-40 md:h-56 object-cover border-4 border-white shadow-lg mb-2" />
+                       <img src={candidate.photo_url} alt="Candidato" className="rounded-sm object-contain w-24 h-32 md:w-40 md:h-56 object-cover border-4 border-white shadow-lg mb-2" />
                        <span className="text-xs md:text-sm font-bold uppercase border-t border-b border-black w-full text-center py-1">{currentRole.title}</span>
                     </div>
                   )}
@@ -216,7 +216,7 @@ export default function Urna({ classId, onReset }: UrnaProps) {
         </div>
 
         {/* Right Keypad */}
-        <div className="w-full md:w-[350px] bg-[#222] p-4 md:p-8 flex flex-col gap-4 shadow-inner">
+        <div className="w-full md:w-[350px] bg-[#222] rounded-sm p-4 md:p-8 flex flex-col gap-4 shadow-inner">
            {/* Numpad Grid */}
            <div className="grid grid-cols-3 gap-2 md:gap-4 flex-1 md:flex-none">
              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
