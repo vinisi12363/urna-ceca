@@ -137,43 +137,43 @@ export default function Urna({ classId, onReset }: UrnaProps) {
 
   if (isFinished) {
     return (
-      <div className="h-[100dvh] bg-gray-100 flex items-center justify-center p-4 landscape:flex-row flex-col">
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-8 landscape:flex-row flex-col">
         <OrientationPrompt />
-        <div className="w-[90dvw] max-w-[800px] h-auto aspect-video bg-white border-2 border-gray-300 shadow-2xl flex items-center justify-center">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-gray-800 tracking-widest uppercase">FIM</h1>
+        <div className="w-full max-w-[800px] h-auto aspect-video bg-white border-2 border-gray-300 shadow-2xl flex items-center justify-center">
+            <h1 className="text-4xl md:text-7xl font-black text-gray-800 tracking-widest uppercase">FIM</h1>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-[100dvh] bg-gray-200 flex items-center justify-center p-0 sm:p-2 md:p-4">
+    <div className="min-h-screen bg-gray-200 flex items-center justify-center p-0 md:p-4">
       <OrientationPrompt />
       {/* Container Urna, flex row layout mimicking real UI */}
-      <div className="w-[100dvw] sm:w-[95dvw] md:w-[90dvw] max-w-[1000px] h-[100dvh] sm:h-auto sm:aspect-[16/9] bg-neutral-100 p-4 sm:p-6 md:p-10 md:border-4 border-gray-300 shadow-2xl flex flex-col gap-2 sm:gap-3 md:gap-4 sm:flex-row overflow-hidden sm:rounded-xl">
+      <div className="w-full max-w-[1000px] md:aspect-[16/9] h-screen md:h-[600px] bg-neutral-100 p-10 md:border-4 border-gray-300 shadow-2xl flex flex-col gap-4 md:flex-row overflow-hidden md:rounded-xl">
         
         {/* Left Screen */}
-        <div className="flex-1 bg-white p-3 sm:p-4 md:p-8 border-b-4 sm:border-b-0 rounded-sm border-gray-800 relative flex flex-col justify-between overflow-hidden">
+        <div className="flex-1 bg-white p-4 md:p-8 border-b-4 md:border-b-0 rounded-sm border-gray-800 relative flex flex-col justify-between overflow-hidden">
             {/* Top Info */}
             <div>
-              <div className="text-base sm:text-lg md:text-xl font-bold uppercase tracking-wide mb-1 sm:mb-2 md:mb-6">Seu voto para</div>
-              <div className="text-center font-bold text-2xl sm:text-3xl md:text-5xl mb-2 sm:mb-4 md:mb-12 capitalize">{currentRole.title}</div>
+              <div className="text-lg md:text-xl font-bold uppercase tracking-wide mb-2 md:mb-6">Seu voto para</div>
+              <div className="text-center font-bold text-3xl md:text-5xl mb-4 md:mb-12 capitalize">{currentRole.title}</div>
             </div>
 
             {/* Middle Input / Candidate Info */}
             <div className="flex-1">
               {voteType === 'BLANK' ? (
-                 <div className="h-full flex items-center justify-center pb-10 sm:pb-20">
-                     <div className="text-3xl sm:text-4xl md:text-6xl font-bold uppercase animate-pulse text-gray-800">Voto em Branco</div>
+                 <div className="h-full flex items-center justify-center pb-20">
+                     <div className="text-4xl md:text-6xl font-bold uppercase animate-pulse text-gray-800">Voto em Branco</div>
                  </div>
               ) : (
-                <div className="flex flex-col sm:flex-row justify-between h-full gap-2 sm:gap-4">
-                  <div className="flex flex-col gap-2 sm:gap-4 md:gap-6">
-                      <div className="flex items-center gap-2 sm:gap-4">
-                        <span className="text-base sm:text-xl md:text-2xl font-bold w-16 sm:w-20 md:w-24">Número:</span>
-                        <div className="flex gap-1 sm:gap-2">
+                <div className="flex flex-col md:flex-row justify-between h-full gap-4">
+                  <div className="flex flex-col gap-4 md:gap-6">
+                      <div className="flex items-center gap-4">
+                        <span className="text-xl md:text-2xl font-bold w-20 md:w-24">Número:</span>
+                        <div className="flex gap-2">
                             {Array.from({ length: currentRole.digits }).map((_, i) => (
-                              <div key={i} className={`w-8 h-12 sm:w-10 sm:h-14 md:w-12 md:h-16 border-2 flex items-center justify-center text-2xl sm:text-3xl md:text-4xl font-bold ${inputNumber[i] ? 'border-gray-800' : 'border-gray-300'} bg-white shadow-inner`}>
+                              <div key={i} className={`w-10 h-14 md:w-12 md:h-16 border-2 flex items-center justify-center text-3xl md:text-4xl font-bold ${inputNumber[i] ? 'border-gray-800' : 'border-gray-300'} bg-white shadow-inner`}>
                                 {inputNumber[i] || ''}
                               </div>
                             ))}
@@ -182,22 +182,22 @@ export default function Urna({ classId, onReset }: UrnaProps) {
 
                       {candidate && (
                         <>
-                          <div className="flex items-center gap-2 sm:gap-4 text-base sm:text-xl md:text-2xl font-bold">
-                            <span className="w-16 sm:w-20 md:w-24">Nome:</span>
-                            <span className="text-xl sm:text-2xl md:text-3xl uppercase">{candidate.name}</span>
+                          <div className="flex items-center gap-4 text-xl md:text-2xl font-bold">
+                            <span className="w-20 md:w-24">Nome:</span>
+                            <span className="text-2xl md:text-3xl uppercase">{candidate.name}</span>
                           </div>
                         </>
                       )}
 
                       {voteType === 'NULL' && inputNumber.length === currentRole.digits && (
-                        <div className="mt-2 sm:mt-4 md:mt-8 text-xl sm:text-2xl md:text-4xl font-bold uppercase animate-pulse">Voto Nulo</div>
+                        <div className="mt-4 md:mt-8 text-2xl md:text-4xl font-bold uppercase animate-pulse">Voto Nulo</div>
                       )}
                   </div>
-
+                  
                   {candidate?.photo_url && (
-                    <div className="flex flex-row sm:flex-col items-center gap-2 sm:gap-4 md:gap-0 self-start sm:self-auto">
-                       <img src={candidate.photo_url} alt="Candidato" className="rounded-sm object-contain w-20 h-28 sm:w-24 sm:h-32 md:w-40 md:h-56 object-cover border-4 border-white shadow-lg mb-0 sm:mb-2" />
-                       <span className="text-xs sm:text-xs md:text-sm font-bold uppercase border-t border-b border-black w-full text-center py-1">{currentRole.title}</span>
+                    <div className="flex flex-row md:flex-col items-center gap-4 md:gap-0 self-start md:self-auto">
+                       <img src={candidate.photo_url} alt="Candidato" className="rounded-sm object-contain w-24 h-32 md:w-40 md:h-56 object-cover border-4 border-white shadow-lg mb-2" />
+                       <span className="text-xs md:text-sm font-bold uppercase border-t border-b border-black w-full text-center py-1">{currentRole.title}</span>
                     </div>
                   )}
                 </div>
@@ -205,33 +205,33 @@ export default function Urna({ classId, onReset }: UrnaProps) {
             </div>
 
             {/* Bottom Instructions */}
-            <div className="border-t border-black pt-1 sm:pt-2 sticky bottom-0 bg-white left-0 w-full mb-0 mt-auto">
-              <p className="font-bold mb-0.5 sm:mb-1 text-xs sm:text-sm md:text-base">Aperte a tecla:</p>
-              <p className="font-bold text-xs sm:text-sm md:text-base">VERDE para CONFIRMAR este voto</p>
-              <p className="font-bold text-xs sm:text-sm md:text-base">VERMELHO para REINICIAR este voto</p>
-              {voteType !== 'BLANK' && <p className="font-bold text-xs sm:text-sm md:text-base">BRANCO para VOTAR EM BRANCO</p>}
+            <div className="border-t border-black pt-2 sticky bottom-0 bg-white left-0 w-full mb-0 mt-auto">
+              <p className="font-bold mb-1">Aperte a tecla:</p>
+              <p className="font-bold">VERDE para CONFIRMAR este voto</p>
+              <p className="font-bold">VERMELHO para REINICIAR este voto</p>
+              {voteType !== 'BLANK' && <p className="font-bold">BRANCO para VOTAR EM BRANCO</p>}
             </div>
-
-            <button onClick={onReset} className="absolute top-1 sm:top-2 right-1 sm:right-2 text-[10px] sm:text-xs text-gray-300 hover:text-red-500 transition-colors">Sair / Trocar Turma</button>
+            
+            <button onClick={onReset} className="absolute top-2 right-2 text-xs text-gray-300 hover:text-red-500 transition-colors">Sair / Trocar Turma</button>
         </div>
 
         {/* Right Keypad */}
-        <div className="w-full sm:w-[280px] md:w-[350px] bg-[#222] rounded-sm p-3 sm:p-4 md:p-8 flex flex-col gap-2 sm:gap-3 md:gap-4 shadow-inner">
+        <div className="w-full md:w-[350px] bg-[#222] rounded-sm p-4 md:p-8 flex flex-col gap-4 shadow-inner">
            {/* Numpad Grid */}
-           <div className="grid grid-cols-3 gap-1.5 sm:gap-2 md:gap-4 flex-1 sm:flex-none">
+           <div className="grid grid-cols-3 gap-2 md:gap-4 flex-1 md:flex-none">
              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-                <button
-                  key={num}
+                <button 
+                  key={num} 
                   onClick={() => handleKeyPress(num.toString())}
-                  className="bg-[#1a1a1a] hover:bg-[#333] text-white text-xl sm:text-2xl md:text-3xl font-bold rounded-lg shadow-[inset_0_-4px_0_rgba(0,0,0,0.6)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:translate-y-1 transition-all h-12 sm:h-14 md:h-20 flex items-center justify-center font-mono border border-[#333]"
+                  className="bg-[#1a1a1a] hover:bg-[#333] text-white text-2xl md:text-3xl font-bold rounded-lg shadow-[inset_0_-4px_0_rgba(0,0,0,0.6)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:translate-y-1 transition-all h-14 md:h-20 flex items-center justify-center font-mono border border-[#333]"
                 >
                   {num}
                 </button>
              ))}
              <div className="col-start-2">
-                <button
+                <button 
                   onClick={() => handleKeyPress('0')}
-                  className="w-full bg-[#1a1a1a] hover:bg-[#333] text-white text-xl sm:text-2xl md:text-3xl font-bold rounded-lg shadow-[inset_0_-4px_0_rgba(0,0,0,0.6)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:translate-y-1 transition-all h-12 sm:h-14 md:h-20 flex items-center justify-center font-mono border border-[#333]"
+                  className="w-full bg-[#1a1a1a] hover:bg-[#333] text-white text-2xl md:text-3xl font-bold rounded-lg shadow-[inset_0_-4px_0_rgba(0,0,0,0.6)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:translate-y-1 transition-all h-14 md:h-20 flex items-center justify-center font-mono border border-[#333]"
                 >
                   0
                 </button>
@@ -239,23 +239,23 @@ export default function Urna({ classId, onReset }: UrnaProps) {
            </div>
 
            {/* Action Buttons */}
-           <div className="grid grid-cols-3 gap-1.5 sm:gap-2 md:gap-3 h-12 sm:h-16 md:h-20 mt-1 sm:mt-2 md:mt-4">
-             <button
+           <div className="grid grid-cols-3 gap-2 md:gap-3 h-16 md:h-20 mt-2 md:mt-4">
+             <button 
                onClick={handleBranco}
-                className="bg-white hover:bg-gray-200 text-black font-bold uppercase text-[10px] sm:text-xs md:text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.2)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] active:translate-y-1 transition-all"
+                className="bg-white hover:bg-gray-200 text-black font-bold uppercase text-xs md:text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.2)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] active:translate-y-1 transition-all"
              >
                Branco
              </button>
-             <button
+             <button 
                onClick={handleCorrige}
-                className="bg-[#cd3333] hover:bg-[#b02a2a] text-white font-bold uppercase text-[10px] sm:text-xs md:text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all"
+                className="bg-[#cd3333] hover:bg-[#b02a2a] text-white font-bold uppercase text-xs md:text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all"
              >
                Corrige
              </button>
-             <button
+             <button 
                 onClick={handleConfirma}
                 disabled={isVoting || (voteType === null && inputNumber.length < currentRole.digits)}
-                className="bg-[#32a852] hover:bg-[#288a42] text-white font-bold uppercase text-[10px] sm:text-xs md:text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all disabled:opacity-50"
+                className="bg-[#32a852] hover:bg-[#288a42] text-white font-bold uppercase text-xs md:text-sm rounded shadow-[inset_0_-4px_0_rgba(0,0,0,0.3)] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all disabled:opacity-50"
              >
                Confirma
              </button>
