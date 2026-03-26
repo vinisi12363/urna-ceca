@@ -1,6 +1,6 @@
 {
-  "buildCommand": "pnpm install && npm run build",
-  "outputDirectory": "urna/dist",
-  "installCommand": "echo 'Skipping root install'",
+  "installCommand": "pnpm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "framework": null
 }
